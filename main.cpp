@@ -1,8 +1,6 @@
 #include <queue>
 #include <vector>
 #include <iostream>
-// #include "request.h"
-// #include "webServer.h"
 #include "loadBalancer.h"
 
 int main() {
@@ -45,7 +43,7 @@ int main() {
     }
 
     LoadBalancer loadBalancer(requestQueue, webServers, minThreshold, maxThreshold, cooldownTime, maxProcessingTime);
-    loadBalancer.run(clockCycles);
+    loadBalancer.run(clockCycles + initialServers);
 
     return 0;
 }

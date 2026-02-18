@@ -15,6 +15,7 @@ LoadBalancer::LoadBalancer(std::queue<Request> requestQueue,
     this->maxThreshold = maxThreshold;
     this->cooldownTime = cooldownTime;
     this->maxProcessTime = maxProcessTime;
+    this->logFile.open("loadBalancer.log", std::ios::out | std::ios::trunc);
 }
 
 void LoadBalancer::run(int clockCycles) {
@@ -32,6 +33,7 @@ void LoadBalancer::run(int clockCycles) {
         }
 
         std::cout << "Clock Time: " << clockTime << ", Queue Size: " << requestQueue.size() << ", Active Servers: " << webServers.size() << std::endl;
+        logFile << "Clock Time: " << clockTime << ", Queue Size: " << requestQueue.size() << ", Active Servers: " << webServers.size() << std::endl;
 
         for (WebServer &server: this->webServers) {
             server.update();
@@ -46,6 +48,7 @@ void LoadBalancer::run(int clockCycles) {
                 requestQueue.push(newRequest);
             }
             std::cout << "Generated " << newRequests << " new requests." << std::endl;
+            logFile << "Generated " << newRequests << " new requests." << std::endl;
         }
 
         if (clockTime % cooldownTime == 0) {
@@ -76,6 +79,7 @@ bool LoadBalancer::sendRequest(const Request& request, int serverId) {
 WebServer* LoadBalancer::allocateServer() {
     webServers.push_back(WebServer(clockTime));
     std::cout << "Allocated new server with ID: " << webServers.back().getId() << std::endl;
+    logFile << "Allocated new server with ID: " << webServers.back().getId() << std::endl;
     return &webServers.back();
 }
 
@@ -84,11 +88,13 @@ void LoadBalancer::deallocateServer() {
         for (unsigned int i = 0; i < webServers.size(); i++) {
             if (webServers[i].isReady()) {
                 std::cout << "Deallocated server with ID: " << webServers[i].getId() << std::endl;
+                logFile << "Deallocated server with ID: " << webServers[i].getId() << std::endl;
                 webServers.erase(webServers.begin() + i);
                 return;
             }
         }
 
         std::cout << "No servers available for deallocation." << std::endl;
+        logFile << "No servers available for deallocation." << std::endl;
     }
 }

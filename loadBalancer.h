@@ -3,6 +3,7 @@
 
 #include <queue>
 #include <vector>
+#include <fstream>
 #include "request.h"
 #include "webServer.h"
 
@@ -26,6 +27,8 @@ class LoadBalancer {
         int maxThreshold;
         int cooldownTime;
         int maxProcessTime;
+
+        std::ofstream logFile;
 
         Request generateRequest(int processTime, char jobType);
         bool sendRequest(const Request& request, int serverId);
