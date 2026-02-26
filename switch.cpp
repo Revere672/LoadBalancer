@@ -1,6 +1,32 @@
+/**
+ * @file switch.cpp
+ * @brief Implementation of the Switch class.
+ *
+ * @details Implements the Switch constructor and the main simulation loop
+ * that orchestrates both primary and secondary LoadBalancer instances.
+ *
+ * @author Load Balancer Project
+ * @date 2025
+ */
+
 #include "switch.h"
 #include <iostream>
 
+/**
+ * @brief Constructs the Switch and forwards configuration to both load balancers.
+ *
+ * @details Uses member-initializer syntax to construct @c loadBalancer_P and
+ * @c loadBalancer_S in place, avoiding unnecessary copies.
+ *
+ * @param requestQueue_P Pre-populated queue of primary requests.
+ * @param requestQueue_S Pre-populated queue of secondary requests.
+ * @param webServers_P   Initial server pool for the primary balancer.
+ * @param webServers_S   Initial server pool for the secondary balancer.
+ * @param minThreshold   Per-server queue lower bound for deallocation.
+ * @param maxThreshold   Per-server queue upper bound for allocation.
+ * @param cooldownTime   Cycles between auto-scaling checks.
+ * @param maxProcessTime Maximum processing time for dynamically generated requests.
+ */
 Switch::Switch(std::queue<Request> requestQueue_P, 
                std::queue<Request> requestQueue_S,
                std::vector<WebServer> webServers_P,
@@ -13,6 +39,18 @@ Switch::Switch(std::queue<Request> requestQueue_P,
         this->maxProcessTime = maxProcessTime;
 }
 
+/**
+ * @brief Advances the simulation for the specified number of clock cycles.
+ *
+ * @details On each cycle a random number is drawn. If the value equals 10
+ * (approximately a 1-in-11 chance), a burst of 1–80 new requests is created.
+ * Each request is randomly assigned job type 'P' or 'S' and placed in the
+ * corresponding temporary vector. Both load balancers then process their
+ * respective new-request vectors via runCycle().
+ *
+ * @param clockCycles Total number of cycles to simulate.
+ * @param logFile     Open output stream shared by both load balancers for logging.
+ */
 void Switch::run(int clockCycles, std::ofstream& logFile) {
     for (int i = 0; i < clockCycles; i++) {
         std::vector<Request> requestQueue_P;

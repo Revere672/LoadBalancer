@@ -1,0 +1,32 @@
+# Doxyfile for Load Balancer Simulation Project
+# Generated for use with Doxygen 1.9+
+
+PROJECT_NAME           = "Load Balancer Simulation"
+PROJECT_NUMBER         = "1.0"
+PROJECT_BRIEF          = "A simulation of a dual load balancer with dynamic server scaling"
+OUTPUT_DIRECTORY       = ./docs
+OUTPUT_LANGUAGE        = English
+
+INPUT                  = .
+FILE_PATTERNS          = *.h *.cpp
+RECURSIVE              = NO
+
+GENERATE_HTML          = YES
+HTML_OUTPUT            = html
+HTML_FILE_EXTENSION    = .html
+HTML_COLORSTYLE        = LIGHT
+GENERATE_TREEVIEW      = YES
+DISABLE_INDEX          = NO
+FULL_SIDEBAR           = NO
+
+GENERATE_LATEX         = NO
+
+EXTRACT_ALL            = YES
+EXTRACT_PRIVATE        = YES
+EXTRACT_STATIC         = YES
+
+HAVE_DOT               = NO
+
+QUIET                  = NO
+WARNINGS               = YES
+WARN_IF_UNDOCUMENTED   = YES

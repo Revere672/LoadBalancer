@@ -1,8 +1,50 @@
+/**
+ * @file main.cpp
+ * @brief Entry point for the load balancer simulation.
+ *
+ * @details Reads simulation parameters from a configuration file
+ * (@c config.txt), initializes the request queues and web server pools,
+ * constructs the Switch, and runs the simulation for the configured number
+ * of clock cycles.
+ *
+ * <b>Configuration file format (config.txt):</b>
+ * @code
+ * initialServers: <int>
+ * clockCycles:    <int>
+ * minThreshold:   <int>
+ * maxThreshold:   <int>
+ * cooldownTime:   <int>
+ * maxProcessingTime: <int>
+ * @endcode
+ *
+ * Each load balancer starts with @c initialServers servers and a pre-filled
+ * queue of @c initialServers * 100 requests. New requests may arrive randomly
+ * during the run managed by the Switch.
+ *
+ * @author Load Balancer Project
+ * @date 2025
+ *
+ * @return 0 on successful completion.
+ */
+
 #include <queue>
 #include <vector>
 #include <iostream>
 #include "switch.h"
 
+/**
+ * @brief Program entry point.
+ *
+ * @details Performs the following initialization steps:
+ *  -# Opens the log file and configuration file.
+ *  -# Parses each configuration parameter by extracting the value after ':'.
+ *  -# Creates @c initialServers WebServer objects for each load balancer.
+ *  -# Populates each balancer's initial queue with @c initialServers*100 requests
+ *     whose processing times are uniformly random in [1, maxProcessingTime].
+ *  -# Constructs and runs the Switch for @c clockCycles ticks.
+ *
+ * @return 0 on success.
+ */
 int main() {
     std::queue<Request> requestQueue_P;
     std::queue<Request> requestQueue_S;
