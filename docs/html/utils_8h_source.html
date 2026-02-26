@@ -98,10 +98,18 @@ $(function(){initNavTree('utils_8h_source.html','',''); });
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#define UTILS_H</span></div>
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#include &quot;<a class="code" href="request_8h.html">request.h</a>&quot;</span></div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span></div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><a class="code hl_class" href="class_request.html">Request</a> <a class="code hl_function" href="utils_8h.html#a8ca7840ea41bb56487a02223e222c62d">generateRequest</a>(<span class="keywordtype">int</span> processTime, <span class="keywordtype">char</span> jobType);</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="comment">// Define codes for colors and resetting</span></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno"><a class="line" href="utils_8h.html#a8d23feea868a983c8c2b661e1e16972f">   19</a></span><span class="preprocessor">#define RED   &quot;\x1b[31m&quot;</span></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno"><a class="line" href="utils_8h.html#acfbc006ea433ad708fdee3e82996e721">   20</a></span><span class="preprocessor">#define GREEN &quot;\x1b[32m&quot;</span></div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno"><a class="line" href="utils_8h.html#a79d10e672abb49ad63eeaa8aaef57c38">   21</a></span><span class="preprocessor">#define BLUE  &quot;\x1b[34m&quot;</span></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno"><a class="line" href="utils_8h.html#abf681265909adf3d3e8116c93c0ba179">   22</a></span><span class="preprocessor">#define YELLOW &quot;\x1b[33m&quot;</span></div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno"><a class="line" href="utils_8h.html#ad243f93c16bc4c1d3e0a13b84421d760">   23</a></span><span class="preprocessor">#define CYAN  &quot;\x1b[36m&quot;</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno"><a class="line" href="utils_8h.html#ab702106cf3b3e96750b6845ded4e0299">   24</a></span><span class="preprocessor">#define RESET &quot;\x1b[0m&quot;</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span></div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span><a class="code hl_class" href="class_request.html">Request</a> <a class="code hl_function" href="utils_8h.html#a8ca7840ea41bb56487a02223e222c62d">generateRequest</a>(<span class="keywordtype">int</span> processTime, <span class="keywordtype">char</span> jobType);</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span><span class="preprocessor">#endif</span></div>
 <div class="ttc" id="aclass_request_html"><div class="ttname"><a href="class_request.html">Request</a></div><div class="ttdoc">Represents a single network request to be handled by a web server.</div><div class="ttdef"><b>Definition</b> request.h:28</div></div>
 <div class="ttc" id="arequest_8h_html"><div class="ttname"><a href="request_8h.html">request.h</a></div><div class="ttdoc">Declaration of the Request class representing a network request.</div></div>
 <div class="ttc" id="autils_8h_html_a8ca7840ea41bb56487a02223e222c62d"><div class="ttname"><a href="utils_8h.html#a8ca7840ea41bb56487a02223e222c62d">generateRequest</a></div><div class="ttdeci">Request generateRequest(int processTime, char jobType)</div><div class="ttdoc">Factory function that constructs and returns a new Request.</div><div class="ttdef"><b>Definition</b> utils.cpp:22</div></div>

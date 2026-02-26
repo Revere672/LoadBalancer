@@ -58,7 +58,7 @@ void LoadBalancer::runCycle(std::vector<Request> *newRequests, std::ofstream& lo
     std::cout << "Load Balancer " << name << " - Running cycle at clock time: " << clockTime << std::endl;
     logFile << "Load Balancer " << name << " - Running cycle at clock time: " << clockTime << std::endl;
 
-    std::cout << "Generated " << newRequests->size() << " new requests." << std::endl;
+    std::cout << BLUE << "Generated " << newRequests->size() << " new requests." << RESET << std::endl;
     logFile << "Generated " << newRequests->size() << " new requests." << std::endl;
     while (!newRequests->empty()) {
         requestQueue.push(newRequests->front());
@@ -77,7 +77,7 @@ void LoadBalancer::runCycle(std::vector<Request> *newRequests, std::ofstream& lo
         }
     }
 
-    std::cout << "Queue Size: " << requestQueue.size() << ", Active Servers: " << webServers.size() << std::endl;
+    std::cout << YELLOW << "Queue Size: " << requestQueue.size() << ", Active Servers: " << webServers.size()<< RESET << std::endl;
     logFile << "Queue Size: " << requestQueue.size() << ", Active Servers: " << webServers.size() << std::endl;
 
     for (WebServer &server: this->webServers) {
@@ -133,7 +133,7 @@ bool LoadBalancer::sendRequest(const Request& request, int serverId) {
  */
 WebServer* LoadBalancer::allocateServer(std::ofstream& logFile) {
     webServers.push_back(WebServer(clockTime));
-    std::cout << "Allocated new server with ID: " << webServers.back().getId() << std::endl;
+    std::cout << GREEN << "Allocated new server with ID: " << webServers.back().getId() << RESET << std::endl;
     logFile << "Allocated new server with ID: " << webServers.back().getId() << std::endl;
     return &webServers.back();
 }
@@ -151,14 +151,14 @@ void LoadBalancer::deallocateServer(std::ofstream& logFile) {
     if (!webServers.empty()) {
         for (unsigned int i = 0; i < webServers.size(); i++) {
             if (webServers[i].isReady()) {
-                std::cout << "Deallocated server with ID: " << webServers[i].getId() << std::endl;
+                std::cout << CYAN << "Deallocated server with ID: " << webServers[i].getId() << RESET << std::endl;
                 logFile << "Deallocated server with ID: " << webServers[i].getId() << std::endl;
                 webServers.erase(webServers.begin() + i);
                 return;
             }
         }
 
-        std::cout << "No servers available for deallocation." << std::endl;
+        std::cout << CYAN << "No servers available for deallocation." << RESET << std::endl;
         logFile << "No servers available for deallocation." << std::endl;
     }
 }

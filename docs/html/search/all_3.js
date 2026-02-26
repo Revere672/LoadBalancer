@@ -1,10 +1,7 @@
 var searchData=
 [
-  ['generateip_0',['generateIP',['../class_request.html#a98035dabf015c3fff871ad54e8455a0c',1,'Request']]],
-  ['generaterequest_1',['generateRequest',['../utils_8cpp.html#a8ca7840ea41bb56487a02223e222c62d',1,'generateRequest(int processTime, char jobType):&#160;utils.cpp'],['../utils_8h.html#a8ca7840ea41bb56487a02223e222c62d',1,'generateRequest(int processTime, char jobType):&#160;utils.cpp']]],
-  ['getid_2',['getId',['../class_web_server.html#aeb7683db74eccb456592ff2f1dc211d8',1,'WebServer']]],
-  ['getipin_3',['getIPin',['../class_request.html#ad088e037f4d40e2049cb07def3be504e',1,'Request']]],
-  ['getipout_4',['getIPout',['../class_request.html#a42f1f379745e9104f519d9db7daac7aa',1,'Request']]],
-  ['getjobtype_5',['getJobType',['../class_request.html#a543cfe98d09b712ffcfe95f3322fa5ba',1,'Request']]],
-  ['getprocesstime_6',['getProcessTime',['../class_request.html#a119ede42ec26e846eea180348359a34d',1,'Request']]]
+  ['deallocateserver_0',['deallocateServer',['../class_load_balancer.html#aec8635fa7f8f5692d26a706acda3d685',1,'LoadBalancer']]],
+  ['dos_20rate_20limit_20check_1',['DoS rate-limit check',['../class_firewall.html#autotoc_md1',1,'']]],
+  ['dosratelimit_2',['dosRateLimit',['../class_firewall.html#aa39330fb627a93c66aa562a1ff154a80',1,'Firewall']]],
+  ['doswindowsize_3',['dosWindowSize',['../class_firewall.html#a7ab8263ac6833c2de2206376ce0ebc1f',1,'Firewall']]]
 ];

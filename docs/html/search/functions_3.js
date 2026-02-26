@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['isready_0',['isReady',['../class_web_server.html#ab7908b2dcb4a951fab1ad2aef03617a8',1,'WebServer']]]
+  ['filterrequests_0',['filterRequests',['../class_firewall.html#ab51585def66d00202d68a20ce3ef4c18',1,'Firewall']]],
+  ['firewall_1',['Firewall',['../class_firewall.html#a81fd3aa0103dff89806309ae72cdd641',1,'Firewall']]]
 ];

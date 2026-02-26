@@ -107,14 +107,14 @@ Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Entry point for the load balancer simulation. </p>
-<p>Reads simulation parameters from a configuration file (<code>config.txt</code>), initializes the request queues and web server pools, constructs the <a class="el" href="class_switch.html" title="Top-level coordinator that drives two LoadBalancer instances.">Switch</a>, and runs the simulation for the configured number of clock cycles.</p>
+<p>Reads simulation parameters from a configuration file (<code>config.txt</code>), initializes the request queues and web server pools, constructs the <a class="el" href="class_switch.html" title="Top-level coordinator that drives two LoadBalancer instances behind a Firewall.">Switch</a>, and runs the simulation for the configured number of clock cycles.</p>
 <p><b>Configuration file format (config.txt):</b> </p><div class="fragment"><div class="line">initialServers: &lt;<span class="keywordtype">int</span>&gt;</div>
 <div class="line">clockCycles:    &lt;<span class="keywordtype">int</span>&gt;</div>
 <div class="line">minThreshold:   &lt;<span class="keywordtype">int</span>&gt;</div>
 <div class="line">maxThreshold:   &lt;<span class="keywordtype">int</span>&gt;</div>
 <div class="line">cooldownTime:   &lt;<span class="keywordtype">int</span>&gt;</div>
 <div class="line">maxProcessingTime: &lt;<span class="keywordtype">int</span>&gt;</div>
-</div><!-- fragment --><p>Each load balancer starts with <code>initialServers</code> servers and a pre-filled queue of <code>initialServers</code> * 100 requests. New requests may arrive randomly during the run managed by the <a class="el" href="class_switch.html" title="Top-level coordinator that drives two LoadBalancer instances.">Switch</a>.</p>
+</div><!-- fragment --><p>Each load balancer starts with <code>initialServers</code> servers and a pre-filled queue of <code>initialServers</code> * 100 requests. New requests may arrive randomly during the run managed by the <a class="el" href="class_switch.html" title="Top-level coordinator that drives two LoadBalancer instances behind a Firewall.">Switch</a>.</p>
 <dl class="section author"><dt>Author</dt><dd>Load Balancer Project </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2025</dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>0 on successful completion. </dd></dl>
@@ -140,7 +140,7 @@ Functions</h2></td></tr>
 <li>Parses each configuration parameter by extracting the value after ':'.</li>
 <li>Creates <code>initialServers</code> <a class="el" href="class_web_server.html" title="Simulates a single web server node that processes network requests.">WebServer</a> objects for each load balancer.</li>
 <li>Populates each balancer's initial queue with <code>initialServers*100</code> requests whose processing times are uniformly random in [1, maxProcessingTime].</li>
-<li>Constructs and runs the <a class="el" href="class_switch.html" title="Top-level coordinator that drives two LoadBalancer instances.">Switch</a> for <code>clockCycles</code> ticks.</li>
+<li>Constructs and runs the <a class="el" href="class_switch.html" title="Top-level coordinator that drives two LoadBalancer instances behind a Firewall.">Switch</a> for <code>clockCycles</code> ticks.</li>
 </ol>
 <dl class="section return"><dt>Returns</dt><dd>0 on success. </dd></dl>
 

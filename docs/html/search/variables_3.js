@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['loadbalancer_5fp_0',['loadBalancer_P',['../class_switch.html#a6aa6d657580588318129305ca441eade',1,'Switch']]],
-  ['loadbalancer_5fs_1',['loadBalancer_S',['../class_switch.html#a641a0009a1169de01a02bcd3b8a09ec1',1,'Switch']]],
-  ['logfile_2',['logFile',['../class_switch.html#a5d3754636b2f7ded976701840ba45fbb',1,'Switch']]]
+  ['dosratelimit_0',['dosRateLimit',['../class_firewall.html#aa39330fb627a93c66aa562a1ff154a80',1,'Firewall']]],
+  ['doswindowsize_1',['dosWindowSize',['../class_firewall.html#a7ab8263ac6833c2de2206376ce0ebc1f',1,'Firewall']]]
 ];

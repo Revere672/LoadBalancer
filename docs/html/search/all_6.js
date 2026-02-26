@@ -1,9 +1,13 @@
 var searchData=
 [
-  ['loadbalancer_0',['LoadBalancer',['../class_load_balancer.html',1,'LoadBalancer'],['../class_load_balancer.html#aacf74baf50074f859b5b414773eaf642',1,'LoadBalancer::LoadBalancer()']]],
-  ['loadbalancer_2ecpp_1',['loadBalancer.cpp',['../load_balancer_8cpp.html',1,'']]],
-  ['loadbalancer_2eh_2',['loadBalancer.h',['../load_balancer_8h.html',1,'']]],
-  ['loadbalancer_5fp_3',['loadBalancer_P',['../class_switch.html#a6aa6d657580588318129305ca441eade',1,'Switch']]],
-  ['loadbalancer_5fs_4',['loadBalancer_S',['../class_switch.html#a641a0009a1169de01a02bcd3b8a09ec1',1,'Switch']]],
-  ['logfile_5',['logFile',['../class_switch.html#a5d3754636b2f7ded976701840ba45fbb',1,'Switch']]]
+  ['id_0',['id',['../class_web_server.html#a02fff1dd9414d0fd6ff7960087b41038',1,'WebServer']]],
+  ['ipin_1',['IPin',['../class_request.html#a125fe67c1826179e10d1c1208f3e1846',1,'Request']]],
+  ['ipout_2',['IPout',['../class_request.html#a008beefce9a304f532f0b2ad68662683',1,'Request']]],
+  ['iprange_3',['IpRange',['../struct_ip_range.html',1,'']]],
+  ['iprequestcount_4',['ipRequestCount',['../class_firewall.html#ad93340cdc179924664adf1c53d40a38f',1,'Firewall']]],
+  ['iptouint_5',['ipToUint',['../class_firewall.html#a29aa5caee6f456335a363649a8a8600d',1,'Firewall']]],
+  ['isautoblocked_6',['isAutoBlocked',['../class_firewall.html#ac27143c5ddf6b74ea2f1ca655f3fcc3f',1,'Firewall']]],
+  ['isavailable_7',['isAvailable',['../class_web_server.html#a7e3a1ced7c847f7bfbb2407c27239e7c',1,'WebServer']]],
+  ['isinblockedrange_8',['isInBlockedRange',['../class_firewall.html#ae262f9187d3f3b79288510cb0f4de437',1,'Firewall']]],
+  ['isready_9',['isReady',['../class_web_server.html#ab7908b2dcb4a951fab1ad2aef03617a8',1,'WebServer']]]
 ];

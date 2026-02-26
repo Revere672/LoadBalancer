@@ -1,5 +1,7 @@
 var files_dup =
 [
+    [ "firewall.cpp", "firewall_8cpp.html", null ],
+    [ "firewall.h", "firewall_8h.html", "firewall_8h" ],
     [ "loadBalancer.cpp", "load_balancer_8cpp.html", null ],
     [ "loadBalancer.h", "load_balancer_8h.html", "load_balancer_8h" ],
     [ "main.cpp", "main_8cpp.html", "main_8cpp" ],

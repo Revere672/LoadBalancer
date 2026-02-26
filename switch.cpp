@@ -3,7 +3,7 @@
  * @brief Implementation of the Switch class.
  *
  * @details Implements the Switch constructor and the main simulation loop
- * that orchestrates both primary and secondary LoadBalancer instances.
+ * that orchestrates the Firewall and both LoadBalancer instances.
  *
  * @author Load Balancer Project
  * @date 2025
@@ -13,10 +13,21 @@
 #include <iostream>
 
 /**
- * @brief Constructs the Switch and forwards configuration to both load balancers.
+ * @brief Constructs the Switch and wires together all simulation components.
  *
- * @details Uses member-initializer syntax to construct @c loadBalancer_P and
- * @c loadBalancer_S in place, avoiding unnecessary copies.
+ * @details Uses member-initializer syntax to construct @c loadBalancer_P,
+ * @c loadBalancer_S, and @c firewall in place.
+ *
+ * The Firewall is configured with:
+ *  - @c dosRateLimit  = 5  requests per IP per window
+ *  - @c dosWindowSize = 20 clock cycles
+ *
+ * Three example blocked ranges are pre-loaded to demonstrate static blocking:
+ *  - @c 10.0.0.0/8    — Private class-A range
+ *  - @c 172.16.0.0/12 — Private class-B range
+ *  - @c 192.168.0.0/16 — Private class-C range
+ *
+ * In a production system these would be read from a config file.
  *
  * @param requestQueue_P Pre-populated queue of primary requests.
  * @param requestQueue_S Pre-populated queue of secondary requests.
@@ -27,53 +38,74 @@
  * @param cooldownTime   Cycles between auto-scaling checks.
  * @param maxProcessTime Maximum processing time for dynamically generated requests.
  */
-Switch::Switch(std::queue<Request> requestQueue_P, 
+Switch::Switch(std::queue<Request> requestQueue_P,
                std::queue<Request> requestQueue_S,
                std::vector<WebServer> webServers_P,
                std::vector<WebServer> webServers_S,
                int minThreshold, int maxThreshold, int cooldownTime, int maxProcessTime)
     : loadBalancer_P(requestQueue_P, webServers_P, 'P', minThreshold, maxThreshold, cooldownTime),
-      loadBalancer_S(requestQueue_S, webServers_S, 'S', minThreshold, maxThreshold, cooldownTime) {
-        
-        clockTime = 0;
-        this->maxProcessTime = maxProcessTime;
+      loadBalancer_S(requestQueue_S, webServers_S, 'S', minThreshold, maxThreshold, cooldownTime),
+      firewall(5, 20)
+{
+    clockTime = 0;
+    this->maxProcessTime = maxProcessTime;
+
+    // --- Static blocked ranges (firewall rules) ---
+    // These three cover all RFC-1918 private address space, which would
+    // not be valid source IPs on a public-facing load balancer.
+    firewall.blockRange("10.0.0.0/8");
+    firewall.blockRange("172.16.0.0/12");
+    firewall.blockRange("192.168.0.0/16");
 }
 
 /**
- * @brief Advances the simulation for the specified number of clock cycles.
+ * @brief Runs the simulation for the specified number of clock cycles.
  *
- * @details On each cycle a random number is drawn. If the value equals 10
- * (approximately a 1-in-11 chance), a burst of 1–80 new requests is created.
- * Each request is randomly assigned job type 'P' or 'S' and placed in the
- * corresponding temporary vector. Both load balancers then process their
- * respective new-request vectors via runCycle().
+ * @details Each iteration:
+ *  -# Optionally generates a burst of new requests.
+ *  -# Passes the full burst through Firewall::filterRequests(), which enforces
+ *     both static IP-range blocks and dynamic DoS rate limits.
+ *  -# Splits the filtered requests by job type and forwards them to the
+ *     appropriate LoadBalancer via runCycle().
+ *  -# Increments @c clockTime.
  *
- * @param clockCycles Total number of cycles to simulate.
- * @param logFile     Open output stream shared by both load balancers for logging.
+ * After all cycles complete, prints a summary of how many requests the
+ * Firewall blocked in total.
+ *
+ * @param clockCycles Total number of clock cycles to run.
+ * @param logFile     Open output stream for logging all events.
  */
 void Switch::run(int clockCycles, std::ofstream& logFile) {
     for (int i = 0; i < clockCycles; i++) {
-        std::vector<Request> requestQueue_P;
-        std::vector<Request> requestQueue_S;
+        std::vector<Request> rawRequests;
 
         if (rand() % 11 == 10) {
             int newRequests = rand() % 80 + 1;
-            
-            for (int i = 0; i < newRequests; i++) {
-                int processTime = rand() % maxProcessTime + 1;
+            for (int j = 0; j < newRequests; j++) {
+                int  processTime = rand() % maxProcessTime + 1;
                 char jobType = rand() % 2 == 0 ? 'P' : 'S';
-                Request newRequest = generateRequest(processTime, jobType);
-                if (jobType == 'P') {
-                    requestQueue_P.push_back(newRequest);
-                } else {
-                    requestQueue_S.push_back(newRequest);
-                }
+                rawRequests.push_back(generateRequest(processTime, jobType));
             }
         }
 
-        loadBalancer_P.runCycle(&requestQueue_P, logFile);
-        loadBalancer_S.runCycle(&requestQueue_S, logFile);
+        std::vector<Request> allowed = firewall.filterRequests(rawRequests, clockTime, logFile);
+
+        std::vector<Request> filtered_P;
+        std::vector<Request> filtered_S;
+        for (const Request& req : allowed) {
+            if (req.getJobType() == 'P')
+                filtered_P.push_back(req);
+            else
+                filtered_S.push_back(req);
+        }
+
+        loadBalancer_P.runCycle(&filtered_P, logFile);
+        loadBalancer_S.runCycle(&filtered_S, logFile);
 
         clockTime++;
     }
+
+    std::cout << RED << "\n[Firewall] Simulation complete. Total requests blocked: " << firewall.getTotalBlocked() << RESET << std::endl;
+    logFile << "\n[Firewall] Simulation complete. Total requests blocked: " << firewall.getTotalBlocked() << std::endl;
+    firewall.printBlockedRanges(logFile);
 }

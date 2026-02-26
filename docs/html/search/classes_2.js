@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['switch_0',['Switch',['../class_switch.html',1,'']]]
+  ['loadbalancer_0',['LoadBalancer',['../class_load_balancer.html',1,'']]]
 ];

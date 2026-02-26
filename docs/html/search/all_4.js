@@ -1,8 +1,8 @@
 var searchData=
 [
-  ['id_0',['id',['../class_web_server.html#a02fff1dd9414d0fd6ff7960087b41038',1,'WebServer']]],
-  ['ipin_1',['IPin',['../class_request.html#a125fe67c1826179e10d1c1208f3e1846',1,'Request']]],
-  ['ipout_2',['IPout',['../class_request.html#a008beefce9a304f532f0b2ad68662683',1,'Request']]],
-  ['isavailable_3',['isAvailable',['../class_web_server.html#a7e3a1ced7c847f7bfbb2407c27239e7c',1,'WebServer']]],
-  ['isready_4',['isReady',['../class_web_server.html#ab7908b2dcb4a951fab1ad2aef03617a8',1,'WebServer']]]
+  ['filterrequests_0',['filterRequests',['../class_firewall.html#ab51585def66d00202d68a20ce3ef4c18',1,'Firewall']]],
+  ['firewall_1',['Firewall',['../class_firewall.html',1,'Firewall'],['../class_firewall.html#a81fd3aa0103dff89806309ae72cdd641',1,'Firewall::Firewall()']]],
+  ['firewall_2',['firewall',['../class_switch.html#a87a374b90a7f9f25fad4103626e167f9',1,'Switch']]],
+  ['firewall_2ecpp_3',['firewall.cpp',['../firewall_8cpp.html',1,'']]],
+  ['firewall_2eh_4',['firewall.h',['../firewall_8h.html',1,'']]]
 ];

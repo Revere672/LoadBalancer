@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['request_0',['Request',['../class_request.html',1,'']]]
+  ['iprange_0',['IpRange',['../struct_ip_range.html',1,'']]]
 ];

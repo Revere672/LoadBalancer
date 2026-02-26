@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['webserver_0',['WebServer',['../class_web_server.html#a5044757cd8574d3f62a7eec5d51fb00f',1,'WebServer']]]
+  ['sendrequest_0',['sendRequest',['../class_load_balancer.html#aba04a5cacde791eb4894f6d5494002e9',1,'LoadBalancer']]],
+  ['switch_1',['Switch',['../class_switch.html#ac45d8061d8f18b93377764d3371c24b3',1,'Switch']]]
 ];

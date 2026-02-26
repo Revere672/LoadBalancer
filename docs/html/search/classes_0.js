@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['loadbalancer_0',['LoadBalancer',['../class_load_balancer.html',1,'']]]
+  ['firewall_0',['Firewall',['../class_firewall.html',1,'']]]
 ];

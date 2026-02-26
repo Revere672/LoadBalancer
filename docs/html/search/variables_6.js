@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['processtime_0',['processTime',['../class_request.html#a3942c106263c684eb82400e2174a5e53',1,'Request']]]
+  ['jobtype_0',['jobType',['../class_request.html#ad49a0f18615ea50f9a11cd2494c93044',1,'Request']]]
 ];
