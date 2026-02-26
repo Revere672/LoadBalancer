@@ -1,0 +1,6 @@
+Intial Web Servers: 10
+Clock Cycles: 10000
+Minimum Threshold: 50
+Maximum Threshold: 80
+Cooldown Time: 5
+Maximum Processing Time: 10

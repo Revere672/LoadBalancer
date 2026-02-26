@@ -6,13 +6,13 @@ CXXFLAGS = -std=c++17 -Wall -Wextra -pedantic -g
 TARGET = loadbalancer
 
 # Source files
-SRCS = main.cpp request.cpp webServer.cpp loadBalancer.cpp
+SRCS = main.cpp request.cpp webServer.cpp loadBalancer.cpp switch.cpp utils.cpp
 
 # Object files
 OBJS = $(SRCS:.cpp=.o)
 
 # Header files
-DEPS = request.h webServer.h loadBalancer.h
+DEPS = request.h webServer.h loadBalancer.h switch.h utils.h
 
 # Default rule
 all: $(TARGET)

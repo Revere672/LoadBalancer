@@ -3,67 +3,62 @@
 #include <cstdlib>
 
 LoadBalancer::LoadBalancer(std::queue<Request> requestQueue, 
-                           std::vector<WebServer> webServers, 
+                           std::vector<WebServer> webServers,
+                           char name,
                            int minThreshold, 
                            int maxThreshold, 
-                           int cooldownTime, 
-                           int maxProcessTime) {
+                           int cooldownTime) {
     this->requestQueue = requestQueue;
     this->webServers = webServers;
-    this->clockTime = webServers.size();
+    this->name = name;
+    this->clockTime = 0;
     this->minThreshold = minThreshold;
     this->maxThreshold = maxThreshold;
     this->cooldownTime = cooldownTime;
-    this->maxProcessTime = maxProcessTime;
-    this->logFile.open("loadBalancer.log", std::ios::out | std::ios::trunc);
 }
 
-void LoadBalancer::run(int clockCycles) {
-    while (clockTime < clockCycles) {
-        for (WebServer &server: this->webServers) {
-            if (requestQueue.empty()) {
-                break;
-            }
+void LoadBalancer::runCycle(std::vector<Request> *newRequests, std::ofstream& logFile) {
+    std::cout << "Load Balancer " << name << " - Running cycle at clock time: " << clockTime << std::endl;
+    logFile << "Load Balancer " << name << " - Running cycle at clock time: " << clockTime << std::endl;
 
-            if (server.isReady()) {
-                Request request = requestQueue.front();
-                requestQueue.pop();
-                sendRequest(request, server.getId());
-            }
-        }
-
-        std::cout << "Clock Time: " << clockTime << ", Queue Size: " << requestQueue.size() << ", Active Servers: " << webServers.size() << std::endl;
-        logFile << "Clock Time: " << clockTime << ", Queue Size: " << requestQueue.size() << ", Active Servers: " << webServers.size() << std::endl;
-
-        for (WebServer &server: this->webServers) {
-            server.update();
-        }
-
-        if (rand() % 11 == 10) {
-            int newRequests = rand() % 100 + 1;
-            for (int i = 0; i < newRequests; i++) {
-                int processTime = rand() % maxProcessTime + 1;
-                char jobType = rand() % 2 == 0 ? 'P' : 'S';
-                Request newRequest = generateRequest(processTime, jobType);
-                requestQueue.push(newRequest);
-            }
-            std::cout << "Generated " << newRequests << " new requests." << std::endl;
-            logFile << "Generated " << newRequests << " new requests." << std::endl;
-        }
-
-        if (clockTime % cooldownTime == 0) {
-            if (requestQueue.size() < minThreshold*webServers.size())
-                deallocateServer();
-            else if (requestQueue.size() > maxThreshold*webServers.size())
-                allocateServer();
-        }
-
-        clockTime++;
+    std::cout << "Generated " << newRequests->size() << " new requests." << std::endl;
+    logFile << "Generated " << newRequests->size() << " new requests." << std::endl;
+    while (!newRequests->empty()) {
+        requestQueue.push(newRequests->front());
+        newRequests->pop_back();
     }
-}
 
-Request LoadBalancer::generateRequest(int processTime, char jobType) {
-    return Request(processTime, jobType);
+    for (WebServer &server: this->webServers) {
+        if (requestQueue.empty()) {
+            break;
+        }
+
+        if (server.isReady()) {
+            Request request = requestQueue.front();
+            requestQueue.pop();
+            sendRequest(request, server.getId());
+        }
+    }
+
+    std::cout << "Queue Size: " << requestQueue.size() << ", Active Servers: " << webServers.size() << std::endl;
+    logFile << "Queue Size: " << requestQueue.size() << ", Active Servers: " << webServers.size() << std::endl;
+
+    for (WebServer &server: this->webServers) {
+        server.update();
+    }
+
+    if (clockTime % cooldownTime == 0) {
+        if (requestQueue.size() < minThreshold*webServers.size())
+            deallocateServer(logFile);
+        else if (requestQueue.size() > maxThreshold*webServers.size())
+            allocateServer(logFile);
+    }
+
+    clockTime++;
+
+    std::cout << "End of cycle for Load Balancer " << name << std::endl << std::endl;
+    logFile << "End of cycle for Load Balancer " << name << std::endl << std::endl;
+    logFile.flush();
 }
 
 bool LoadBalancer::sendRequest(const Request& request, int serverId) {
@@ -76,14 +71,14 @@ bool LoadBalancer::sendRequest(const Request& request, int serverId) {
     return false;
 }
 
-WebServer* LoadBalancer::allocateServer() {
+WebServer* LoadBalancer::allocateServer(std::ofstream& logFile) {
     webServers.push_back(WebServer(clockTime));
     std::cout << "Allocated new server with ID: " << webServers.back().getId() << std::endl;
     logFile << "Allocated new server with ID: " << webServers.back().getId() << std::endl;
     return &webServers.back();
 }
 
-void LoadBalancer::deallocateServer() {
+void LoadBalancer::deallocateServer(std::ofstream& logFile) {
     if (!webServers.empty()) {
         for (unsigned int i = 0; i < webServers.size(); i++) {
             if (webServers[i].isReady()) {

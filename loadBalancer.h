@@ -6,34 +6,32 @@
 #include <fstream>
 #include "request.h"
 #include "webServer.h"
+#include "utils.h"
 
 class LoadBalancer {
     public:
         LoadBalancer(std::queue<Request> requestQueue,
                     std::vector<WebServer> webServers,
+                    char name,
                     int minThreshold,
                     int maxThreshold,
-                    int cooldownTime,
-                    int maxProcessTime);
+                    int cooldownTime);
 
-        void run(int clockCycles);
+        void runCycle(std::vector<Request> *newRequests, std::ofstream& logFile);
 
     private:
         std::queue<Request> requestQueue;
         std::vector<WebServer> webServers;
 
+        char name;
         int clockTime;
         int minThreshold;
         int maxThreshold;
         int cooldownTime;
-        int maxProcessTime;
 
-        std::ofstream logFile;
-
-        Request generateRequest(int processTime, char jobType);
         bool sendRequest(const Request& request, int serverId);
-        WebServer* allocateServer();
-        void deallocateServer();
+        WebServer* allocateServer(std::ofstream& logFile);
+        void deallocateServer(std::ofstream& logFile);
 };
 
 #endif
