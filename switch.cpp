@@ -76,11 +76,14 @@ Switch::Switch(std::queue<Request> requestQueue_P,
  * @param logFile     Open output stream for logging all events.
  */
 void Switch::run(int clockCycles, std::ofstream& logFile) {
+    int requestQueueSize_P = 0;
+    int requestQueueSize_S = 0;
+
     for (int i = 0; i < clockCycles; i++) {
         std::vector<Request> rawRequests;
 
-        if (rand() % 11 == 10) {
-            int newRequests = rand() % 80 + 1;
+        if (rand() % 5 == 4) {
+            int newRequests = rand() % 40 + 1;
             for (int j = 0; j < newRequests; j++) {
                 int  processTime = rand() % maxProcessTime + 1;
                 char jobType = rand() % 2 == 0 ? 'P' : 'S';
@@ -99,11 +102,15 @@ void Switch::run(int clockCycles, std::ofstream& logFile) {
                 filtered_S.push_back(req);
         }
 
-        loadBalancer_P.runCycle(&filtered_P, logFile);
-        loadBalancer_S.runCycle(&filtered_S, logFile);
+        requestQueueSize_P = loadBalancer_P.runCycle(&filtered_P, logFile);
+        requestQueueSize_S = loadBalancer_S.runCycle(&filtered_S, logFile);
 
         clockTime++;
     }
+
+    logFile << "\nSimulation complete. Final request queue sizes: " << std::endl;
+    logFile << "Processing: " << requestQueueSize_P << " requests remaining" << std::endl;
+    logFile << "Streaming: " << requestQueueSize_S << " requests remaining" << std::endl;
 
     std::cout << RED << "\n[Firewall] Simulation complete. Total requests blocked: " << firewall.getTotalBlocked() << RESET << std::endl;
     logFile << "\n[Firewall] Simulation complete. Total requests blocked: " << firewall.getTotalBlocked() << std::endl;

@@ -66,7 +66,7 @@ class LoadBalancer {
          *                    (vector is consumed during the call).
          * @param logFile     Reference to an open output stream for persistent logging.
          */
-        void runCycle(std::vector<Request> *newRequests, std::ofstream& logFile);
+        int runCycle(std::vector<Request> *newRequests, std::ofstream& logFile);
 
     private:
         std::queue<Request> requestQueue;   ///< Queue of pending requests awaiting dispatch.

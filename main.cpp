@@ -101,6 +101,15 @@ int main() {
         requestQueue_S.push(newRequest);
     }
 
+    logFile << "Initial processing request queue populated with " << requestQueue_P.size() << " requests" << std::endl;
+    logFile << "Initial streaming request queue populated with " << requestQueue_S.size() << " requests" << std::endl;
+    logFile << std::endl;
+    logFile << "Initial processing servers available: " << webServers_P.size() << std::endl;
+    logFile << "Initial streaming servers available: " << webServers_S.size() << std::endl;
+    logFile << std::endl;
+    logFile << "Request processing time is uniformly random in the range [1, " << maxProcessingTime << "] clock cycles" << std::endl;
+    logFile << std::endl;
+
     Switch switch_(requestQueue_P, requestQueue_S, webServers_P, webServers_S, minThreshold, maxThreshold, cooldownTime, maxProcessingTime);
     switch_.run(clockCycles, logFile);
 

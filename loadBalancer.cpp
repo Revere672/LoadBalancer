@@ -54,7 +54,7 @@ LoadBalancer::LoadBalancer(std::queue<Request> requestQueue,
  *                    elements are popped from the back and pushed to the queue.
  * @param logFile     Open output file stream used for persistent event logging.
  */
-void LoadBalancer::runCycle(std::vector<Request> *newRequests, std::ofstream& logFile) {
+int LoadBalancer::runCycle(std::vector<Request> *newRequests, std::ofstream& logFile) {
     std::cout << "Load Balancer " << name << " - Running cycle at clock time: " << clockTime << std::endl;
     logFile << "Load Balancer " << name << " - Running cycle at clock time: " << clockTime << std::endl;
 
@@ -96,6 +96,8 @@ void LoadBalancer::runCycle(std::vector<Request> *newRequests, std::ofstream& lo
     std::cout << "End of cycle for Load Balancer " << name << std::endl << std::endl;
     logFile << "End of cycle for Load Balancer " << name << std::endl << std::endl;
     logFile.flush();
+
+    return requestQueue.size();
 }
 
 /**
